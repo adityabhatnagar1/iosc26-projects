@@ -1,207 +1,175 @@
-<div align="center">
+# Caesar Cipher Project — Report
 
-# Team i5 · Stage 2 · The Build Round
-
-**Intel oneAPI Club · USAR @ GGSIPU EDC**
-
-<img width="192" height="208" alt="miku-waving" src="https://github.com/user-attachments/assets/f3fbf7ff-20eb-4191-a8ef-85b4acb61679" />
-
-![Shortlisted](https://img.shields.io/badge/shortlisted-15-0071C5?style=for-the-badge)
-![Tracks](https://img.shields.io/badge/tracks-5-00C7FD?style=for-the-badge)
-![Build time](https://img.shields.io/badge/build_time-~2.5_weeks-8A2BE2?style=for-the-badge)
-![Submit via](https://img.shields.io/badge/submit_via-Pull_Request-2EA043?style=for-the-badge)
-
-[🌐 Official Site](https://adityabhatnagar.is-a.dev/iosc.i5/) &nbsp;·&nbsp; [📝 README Template](https://adityabhatnagar.is-a.dev/iosc.i5/assets/docs/PROJECT_TEMPLATE.md) &nbsp;·&nbsp; [🍴 Fork This Repo](https://github.com/adityabhatnagar1/iosc26-projects/fork)
-
-</div>
+**Name:** Gaurav &nbsp;|&nbsp; **Roll No:** 04719051725 &nbsp;|&nbsp; **Batch:** B1 &nbsp;|&nbsp; **Course:** IIOT (2nd Year)
 
 ---
 
-## 🎉 Congratulations, you made it!
+## 1. Overview
 
-Out of 100+ entries, **15 of you** cleared Stage 1. Now it's time to show what you can _build_.
+### What & Why
+I built a **Caesar Cipher program in Python** that can encrypt and decrypt any text by shifting each letter by a chosen key (1–25). I chose this project because cryptography is the foundation of modern security (banking, WhatsApp, passwords), and the Caesar cipher is the perfect first step into understanding how encryption actually works — simple enough to build from scratch, yet it introduces the core ideas of keys, modular arithmetic, and cipher algorithms.
 
-This repository is where your Stage 2 projects live. **Every candidate has their own folder.** Your whole job is simple:
-
-> **Build your project → put it in _your_ folder → send us a Pull Request.**
-
-That's it. No one touches anyone else's folder, so nobody's work can get overwritten. 🙌
-
-### 📌 Quick links
-
-- [How it works (in one picture)](#-how-it-works-in-one-picture)
-- [Step-by-step guide](#-step-by-step-guide)
-- [What goes inside your folder](#-what-goes-inside-your-folder)
-- [The five tracks](#-the-five-tracks)
-- [Rules of engagement](#-rules-of-engagement)
-- [Before you open your PR](#-before-you-open-your-pr-checklist)
-- [Stuck? Common problems](#-stuck-common-problems)
-- [Candidate folders](#-candidate-folders)
+### Expected Outcome
+- A working program that encrypts and decrypts text correctly for any valid key.
+- Input validation so the program never crashes on bad input.
+- A clean menu-driven interface that anyone can run without setup.
 
 ---
 
-## 🗺️ How it works (in one picture)
+## 2. Requirements
 
-```mermaid
-flowchart LR
-    A["🍴 Fork<br/>this repo"] --> B["💻 Clone<br/>YOUR fork"]
-    B --> C["🌿 Make a<br/>branch"]
-    C --> D["🔧 Build inside<br/>YOUR folder"]
-    D --> E["⬆️ Commit<br/>& push"]
-    E --> F["📬 Open a<br/>Pull Request"]
-    F --> G["✅ Panel reviews<br/>& merges"]
-```
+### Hardware
+| Component | Qty | Purpose |
+|---|---|---|
+| Laptop / PC | 1 | Running and testing the program |
+| (Any standard computer is sufficient — no special hardware needed) | | |
 
-**In plain words:** a _fork_ is your own personal copy of this repo. You do all your work in your copy, then a _Pull Request_ (PR) is you saying _"hey, please add my finished work to the main repo."_ We look at it, and if everything is good, we merge it in.
+### Software
+| Tool / Library | Version | Purpose |
+|---|---|---|
+| Python | 3.x | Core programming language |
+| VS Code / any editor | — | Writing the code |
+| Git & GitHub | — | Version control and submission |
 
----
-
-## 🚀 Step-by-step guide
-
-> 🔑 Replace `YOUR-USERNAME` with your GitHub username and `firstname-lastname` with **your own folder name** (see the [list below](#-candidate-folders)).
-
-### Step 1 · Fork this repo 🍴
-
-Click the **Fork** button at the top-right of this page (or [click here](https://github.com/adityabhatnagar1/iosc26-projects/fork)). GitHub makes a personal copy under your account.
-
-### Step 2 · Clone your fork to your computer 💻
-
-```bash
-git clone https://github.com/YOUR-USERNAME/iosc26-projects.git
-cd iosc26-projects
-```
-
-### Step 3 · Make your own branch 🌿
-
-A branch is just a safe workspace for your changes.
-
-```bash
-git checkout -b firstname-lastname
-```
-
-### Step 4 · Open YOUR folder and build 🔧
-
-Go into the folder that has your name, e.g. `firstname-lastname/`.
-Inside, you'll find a ready-made **`README.md`**. That is your project documentation. Fill it in as you build.
-Put your code, circuit files, screenshots, photos and so on into the right sub-folders (details [below](#-what-goes-inside-your-folder)).
-
-> ⚠️ **Only touch files inside your own folder.** Don't edit the main README, don't edit other people's folders.
-
-### Step 5 · Save and upload your work ⬆️
-
-```bash
-git add firstname-lastname/
-git commit -m "Add project: <your project title>"
-git push origin firstname-lastname
-```
-
-💡 Writing `git add firstname-lastname/` (instead of `git add .`) is your safety net. It only picks up files from your own folder.
-
-### Step 6 · Open a Pull Request 📬
-
-1. Go to **your fork** on GitHub. You'll see a yellow banner saying **"Compare & pull request"**. Click it.
-2. Title it like: `[firstname-lastname] Your Project Title`
-3. Fill in the checklist that appears, then click **Create pull request**.
-
-
-> 🖱️ **Not comfortable with commands?** [GitHub Desktop](https://desktop.github.com/) does all of the above with buttons. Or, as a last resort, on your fork use **Add file → Upload files** (inside your own folder), then **Contribute → Open pull request**.
+**Constraints:** No budget required; only constraint was time — the project was completed within the assigned lab schedule using only built-in Python features (no external libraries).
 
 ---
 
-## 📁 What goes inside your folder
+## 3. Design
 
-Every folder is pre-built for you, like this:
+### System Overview
+```
+User Input (text + key)  →  Validate Key (1–25)  →  Shift Each Letter  →  Output (cipher/plain text)
+```
+1. The program displays a menu: **ENCRYPT / DECRYPT / QUIT**.
+2. The user enters a key; the program loops until a valid number from 1–25 is given.
+3. Each letter is shifted using `(index ± key) % 26` — the modulo keeps the shift inside the alphabet.
+4. Uppercase stays uppercase, lowercase stays lowercase; spaces, numbers, and punctuation pass through unchanged.
+5. The result is printed and the menu repeats until the user quits.
 
-```text
-firstname-lastname/
-├── README.md        ← your project documentation (fill in the template!)
-├── src/             ← code: Arduino sketches, Python scripts, firmware...
-├── hardware/        ← schematics, circuit files, wiring diagrams, BOM
+### System Diagram
+```
++------------+     +-----------+     +----------------+     +-------------+
+|   Menu     | --> | Get Key   | --> | Encrypt/Decrypt| --> |  Show Result|
+| (e / d / q)|     | (1–25)    |     | (shift letters)|     |             |
++------------+     +-----------+     +----------------+     +-------------+
+```
+
+![System Diagram](docs/images/system_diagram.png)
+
+### Key Decisions
+| Decision | Chosen | Rejected | Why |
+|---|---|---|---|
+| Letter shifting | Helper function `shift_letter()` | Duplicated code in Encrypt and Decrypt | One function = less code, easier to fix |
+| Alphabet handling | `% 26` modular arithmetic | If-statements for wrap-around | Shorter and mathematically clean |
+| Case handling | Preserve original case (H→K, h→k) | Force everything to lowercase | Output looks natural and round-trip is lossless |
+| Input safety | `try/except` loop for the key | Single input attempt | Program never crashes on wrong input |
+
+---
+
+## 4. Implementation
+
+The core algorithm is the modular shift:
+
+```python
+new_index = (index + key) % 26   # 26 letters, wraps z → a
+```
+
+- **Encryption** calls `shift_letter(letter, key)` — shifts forward.
+- **Decryption** calls `shift_letter(letter, -key)` — shifts backward (reusing the same function).
+- **Case preservation:** the helper detects uppercase letters, converts them back after shifting.
+- **Input validation:** `get_key()` loops with `try/except` until a valid integer in range is entered.
+
+**Source file:** [`src/caesar_cipher.py`](./src/caesar_cipher.py)
+
+*This project was learned from the YouTube channel **Fabio Mussani** — https://youtu.be/QYng_rXg5OQ*
+
+---
+
+## 5. Demonstration
+
+**Test 1 — Encryption (key = 3):**
+```
+ENTER TEXT: Hello World
+RESULT: Khoor Zruog
+```
+**Test 2 — Decryption (key = 3):**
+```
+ENTER TEXT: Khoor Zruog
+RESULT: Hello World
+```
+**Test 3 — Invalid key handling:**
+```
+ENTER KEY (1-25): 30
+KEY MUST BE 1-25. TRY AGAIN.
+ENTER KEY (1-25): abc
+ENTER A WHOLE NUMBER. TRY AGAIN.
+```
+
+**Screenshots:**
+
+| Encryption (key = 3) | Decryption + input validation |
+|---|---|
+| ![Encrypt](docs/images/screenshot_encrypt.png) | ![Decrypt](docs/images/screenshot_decrypt.png) |
+
+📹 Screen recording of the full run: see [`media/demo_transcript.txt`](./media/demo_transcript.txt) (full recorded session) and the screenshots below.
+
+---
+
+## 6. Final Result
+
+### Working
+- [x] Encrypts any text with a user-selected key (1–25)
+- [x] Decrypts back to the exact original text, including uppercase letters
+- [x] Input validation — never crashes on wrong input
+- [x] Repeatable menu loop — encrypt/decrypt multiple times without restarting
+
+### Known Issues
+- Only English letters (a–z) are encrypted; numbers and symbols pass through as-is
+- The Caesar cipher is easily broken by brute force (only 25 possible keys)
+
+**Demo:** [Recorded session](media/demo_transcript.txt) &nbsp;|&nbsp; **Automated tests:** `python -m unittest discover tests -v` (12 tests, all passing)
+
+---
+
+## 7. Limitations & Improvements
+
+**Limitations:**
+- 25 possible keys means it offers zero real security — it's a learning tool, not real encryption.
+- No file input/output; text must be typed manually.
+
+**Next Steps (with more time):**
+- Add a **brute-force mode** that tries all 25 keys at once
+- Add **file encryption** (.txt input/output)
+- Extend to a **Vigenère cipher** (multiple keys) for a stronger challenge
+
+---
+
+## 8. Key Learnings
+
+- **Modular arithmetic (`% 26`)** is the elegant way to handle alphabet wrap-around — no messy if-statements needed.
+- **Reusing code matters:** writing `shift_letter()` once and calling it from both Encrypt and Decrypt made debugging far easier.
+- **Defensive programming:** the `try/except` loop taught me that real users *will* enter wrong input — a program must handle it gracefully.
+- **Case-preservation bug:** I learned that checking `letter in alphabet` silently skips uppercase letters — the fix (`letter.lower() in alphabet`) taught me to test edge cases like capital letters.
+
+---
+
+## 9. Repository Structure
+
+```
+gaurav/
+├── README.md                    (this report)
+├── src/
+│   └── caesar_cipher.py         (main program)
+├── tests/
+│   └── test_caesar.py           (12 automated tests — all passing)
 ├── docs/
-│   └── images/      ← system diagram, final build photo, screenshots
-├── tests/           ← test results, test scripts, waveforms, logs
-└── media/           ← photos, short clips, extra proof
+│   └── images/
+│       ├── system_diagram.png       (flowchart of the program)
+│       ├── screenshot_encrypt.png   (encryption run)
+│       └── screenshot_decrypt.png   (decryption + validation run)
+├── hardware/
+│   └── README.md                (system requirements — software-only project)
+└── media/
+    └── demo_transcript.txt      (full recorded demo session)
 ```
-
-You can rename or add things if your project needs it, but **stay inside your folder**.
-
-### ✍️ About your README
-
-Your `README.md` follows the official [project template](https://adityabhatnagar.is-a.dev/iosc.i5/assets/docs/PROJECT_TEMPLATE.md). It has 9 sections: Overview, Requirements, Design, Implementation, Demonstration, Final Result, Limitations, Key Learnings and Repository Structure.
-
-- Write it **in your own words**. No AI-generated filler. We want to read _your_ story.
-- Cover **every demonstration requirement** of your chosen project.
-- For demo recordings, **upload to YouTube (unlisted is fine) and paste the link**. Please don't commit big video files.
-
-### 🔒 Privacy heads-up
-
-This repo is **public**. Anything you commit can be seen by anyone. Never commit WiFi passwords, API keys or tokens. Think twice before putting a personal phone number or email in your README.
-
----
-
-## 🧭 The five tracks
-
-You pick **exactly one project** from **one track**. Browse the full project bucket on the [official site](https://adityabhatnagar.is-a.dev/iosc.i5/).
-
-|     | Track                                 | What you'll be doing                                                                                            |
-| :-: | ------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-|  ⬡  | **Analog Electronics**                | Filters, comparators and signal-conditioning circuits: heartbeat simulators, reflex testers, temperature alarms |
-|  ⬡  | **Digital Electronics**               | Arduino-based counters, timers and state machines reacting to simulated sensors                                 |
-|  ⬡  | **IoT & Robotics**                    | WiFi dashboards, small robots and IoT networks that react to simulated conditions                               |
-|  ⬡  | **Hardware & Software Orchestration** | Arduino + Python systems that stream, visualize and react to sensor data in real time                           |
-|  ⬡  | **Cybersecurity**                     | Python tools for password strength, breach detection and login lockout logic                                    |
-
-> Choose carefully. Switching projects later is only possible with **prior, documented communication with the panel**.
-
----
-
-## 📜 Rules of engagement
-
-> **Build it. Own it. Prove it.**
-
-1. **Choose once.** One project, then commit to it. Changes need written approval from the panel.
-2. **Build the whole thing.** Every requirement in your project's _Demonstration_ section must be implemented **and** shown working.
-3. **Show your work.** Document using the template: what you built, how it works, what you tested, what _actually_ happened.
-4. **Give credit.** Tutorials, libraries and references are allowed, but you must understand them and credit them. Passing off someone else's work as your own is a violation.
-5. **Publish the evidence.** Code, documentation, plus photos, screenshots, waveforms, test results or demo clips, all in your folder.
-6. **Ship on time.** Deadline: **As announced by the panel**. Late submissions are not evaluated unless the panel approved an exception _beforehand_.
-7. **Raise blockers early.** Hardware died? Stuck on a bug? Tell us early. Honest progress beats pretending everything worked.
-
-⚠️ **Fabricated demos, falsified results, plagiarism or deliberate misrepresentation = immediate disqualification.**
-
----
-
-## ✅ Before you open your PR (checklist)
-
-- [ ] My PR changes files **only inside my own folder**
-- [ ] My `README.md` follows the template and every section is filled in
-- [ ] **Every** demonstration requirement is covered
-- [ ] My demo video link works (YouTube unlisted is fine)
-- [ ] Photos / screenshots / waveforms are inside `docs/` or `media/` and show up correctly
-- [ ] No passwords, API keys or secrets anywhere
-- [ ] Everything is my own work, and all sources are credited
-
----
-
-## 🆘 Stuck? Common problems
-
-| Problem                                          | What to do                                                                                                              |
-| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| **"I changed a file in someone else's folder!"** | Undo those changes **before** opening the PR. Not sure how? Message us. PRs that touch other folders will be sent back. |
-| **"Will my PR clash with other people's?"**      | No. Everyone only edits their own folder, so there's nothing to clash. Ignore the "your fork is behind" notice.         |
-| **"My images don't show in the README"**         | Check the path (`./docs/images/name.png`) and the exact spelling. GitHub is **case-sensitive**.                         |
-| **"Push rejected: file too large"**              | GitHub blocks files over 100 MB. Upload videos to YouTube and link them instead.                                        |
-| **"I don't see 'Compare & pull request'"**       | Open your fork, click the **Contribute** button, then **Open pull request**.                                            |
-| **"My hardware broke / I'm blocked"**            | Tell the panel early. That's explicitly encouraged.                                                                     |
-
-Still stuck? Reach out to the panel through the channel shared with you.
-
----
-
-<div align="center">
-
-**Built with curiosity, caffeine & love by Team i5** ☕
-
-_i5 @ Intel oneAPI Club · USAR @ GGSIPU EDC_
-
-</div>
