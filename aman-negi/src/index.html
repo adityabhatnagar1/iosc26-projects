@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Email Detector</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Phishing Email Detector</h1>
+        <p class="subtitle">Rule-based email security analysis</p>
+
+        <textarea id="emailInput" placeholder="Paste email content here..."></textarea>
+
+        <button onclick="checkEmail()">Check Email</button>
+
+        <div id="result"></div>
+
+        <button class="test-btn" onclick="runTestDataset()">
+            Run 10-Email Test
+        </button>
+
+        <div id="testResults"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
