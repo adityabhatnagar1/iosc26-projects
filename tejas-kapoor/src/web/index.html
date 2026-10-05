@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phishing Email Pattern Detector</title>
+<style>
+:root{--bg:#fff;--fg:#1a1d23;--mut:#5b6472;--card:#f5f6f8;--bd:#dfe3e8;--ok:#1a7f4b;--bad:#c4321f;--acc:#2f5bd8}
+@media(prefers-color-scheme:dark){:root{--bg:#12141a;--fg:#e8eaee;--mut:#9aa3b2;--card:#1b1e26;--bd:#2c313c;--ok:#4cc38a;--bad:#ff7a66;--acc:#7c9bff}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:860px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.7rem;margin:.2em 0}h2{font-size:1.2rem;margin:2em 0 .6em}
+p.lead{color:var(--mut);margin:.2em 0 1em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px}
+.card b{display:block;font-size:1.5rem}.card span{color:var(--mut);font-size:.85rem}
+details{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin:8px 0}
+summary{cursor:pointer;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tag{font-size:.75rem;padding:1px 8px;border-radius:99px;border:1px solid var(--bd)}
+.ok{color:var(--ok)}.bad{color:var(--bad)}
+.name{flex:1;min-width:150px;font-weight:600}
+ul{margin:.6em 0 0;padding-left:1.2em}li{margin:2px 0}
+textarea,input,button{font:inherit;color:inherit}
+textarea{width:100%;min-height:200px;padding:10px;border-radius:10px;border:1px solid var(--bd);background:var(--card);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem}
+button{background:var(--acc);color:#fff;border:0;border-radius:8px;padding:9px 16px;cursor:pointer;margin:8px 8px 0 0}
+button.alt{background:var(--card);color:var(--fg);border:1px solid var(--bd)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--bd);vertical-align:top}
+.wrap{overflow-x:auto}
+#out .verdict{font-size:1.2rem;font-weight:700}
+code{background:var(--card);padding:1px 5px;border-radius:5px}
+</style>
+</head>
+<body>
+<main>
+<h1>Phishing Email Pattern Detector</h1>
+<p class="lead">A transparent, rule-based detector. No machine learning: every verdict is a sum of named indicators you can read.</p>
+
+<h2>Demonstration: 5 phishing + 5 legitimate emails</h2>
+<div id="summary" class="grid"></div>
+<div id="rows"><p class="lead">Loading… (start the app with <code>python server.py</code>)</p></div>
+
+<h2>Try your own email</h2>
+<p class="lead">Paste raw email text (headers + body). It is analyzed locally and never leaves your machine.</p>
+<textarea id="raw" spellcheck="false"></textarea>
+<button id="go">Analyze</button><button id="fill" class="alt">Load phishing example</button><button id="fill2" class="alt">Load legit example</button>
+<div id="out" class="card" hidden></div>
+
+<h2>What the detector looks for</h2>
+<div class="wrap"><table>
+<tr><th>Indicator</th><th>Pts</th><th>Why it matters</th></tr>
+<tr><td>Look-alike sender or link domain (<code>paypa1-secure.com</code>)</td><td>4</td><td>Attackers register near-copies of brands.</td></tr>
+<tr><td>Link text shows one domain, href goes elsewhere</td><td>4</td><td>Classic disguise of a malicious URL.</td></tr>
+<tr><td>Link to raw IP address</td><td>4</td><td>Legitimate services use domain names.</td></tr>
+<tr><td>Risky attachment (<code>.zip .exe .html .docm</code>, double extensions)</td><td>4 / 3</td><td>Common malware delivery.</td></tr>
+<tr><td>Display name claims a brand, domain does not match</td><td>3</td><td>Sender spoofing.</td></tr>
+<tr><td>Requests passwords, card numbers, OTP, identity details</td><td>3</td><td>Credential harvesting. Warnings like "never share your OTP" are ignored.</td></tr>
+<tr><td>Punycode domain, <code>@</code> in URL</td><td>3</td><td>Homograph and obfuscation tricks.</td></tr>
+<tr><td>Urgency wording ("within 24 hours", "final notice")</td><td>2–3</td><td>Pressure to skip careful thought.</td></tr>
+<tr><td>Threats (suspension, legal action)</td><td>2</td><td>Fear as a lever.</td></tr>
+<tr><td>Lure / payment scam (lottery, gift cards, wire transfer)</td><td>2</td><td>Money-themed fraud, including CEO fraud.</td></tr>
+<tr><td>Reply-To domain differs from sender; brand mentioned from unrelated domain; URL shortener</td><td>2</td><td>Redirects replies or hides destinations.</td></tr>
+<tr><td>Generic greeting, many subdomains, plain <code>http</code>, shouting/ALL-CAPS</td><td>1</td><td>Weak signals that add up.</td></tr>
+</table></div>
+<p class="lead">Verdict: total score ≥ <b id="thr">5</b> ⇒ PHISHING.</p>
+
+<h2>Limitations</h2>
+<ul>
+<li>The 10-email demo is tiny, and the rules were refined after seeing it, so 10/10 is not a real accuracy estimate.</li>
+<li>Fixed word lists miss novel wording and non-English emails; short, plain-text scams sit near the threshold.</li>
+<li>It cannot check SPF/DKIM/DMARC, domain age, or live link reputation.</li>
+</ul>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
+const PH = `From: PayPal Security <support@paypa1-secure.com>
+Subject: Urgent: verify your account
+Content-Type: text/html
+
+Dear Customer, your account will be suspended within 24 hours. Verify your password now:
+<a href="http://paypa1-secure.com/login">www.paypal.com/verify</a>`;
+const LG = `From: Priya Sharma <priya@university.edu>
+Subject: Project sync tomorrow 4pm
+
+Hi team, please send your slides before tomorrow's sync. Thanks!`;
+
+function indicators(list) {
+  const ul = el('ul');
+  if (!list.length) ul.append(el('li', null, 'No indicators triggered.'));
+  list.forEach(i => ul.append(el('li', null, `+${i.points}  ${i.text}`)));
+  return ul;
+}
+
+async function loadDemo() {
+  try {
+    const d = await (await fetch('/api/demo')).json();
+    $('thr').textContent = d.threshold;
+    const s = $('summary'); s.replaceChildren();
+    [['Accuracy', Math.round(d.counts.accuracy * 100) + '%'], ['Correct', d.counts.tp + d.counts.tn + '/10'],
+     ['False positives', d.counts.fp], ['False negatives', d.counts.fn]].forEach(([k, v]) => {
+      const c = el('div', 'card'); c.append(el('b', null, v), el('span', null, k)); s.append(c);
+    });
+    const r = $('rows'); r.replaceChildren();
+    d.rows.forEach(x => {
+      const det = el('details'), sm = el('summary');
+      const good = x.result === 'correct';
+      sm.append(el('span', 'name', x.name), el('span', 'tag', 'truth: ' + x.truth), el('span', 'tag', 'verdict: ' + x.verdict),
+                el('span', 'tag', 'score ' + x.score), el('span', 'tag ' + (good ? 'ok' : 'bad'), good ? '✓ correct' : '✗ ' + x.result));
+      det.append(sm, el('div', null, `From: ${x.from} | Subject: ${x.subject}`), indicators(x.indicators));
+      r.append(det);
+    });
+  } catch (e) { $('rows').textContent = 'Could not reach /api/demo. Run: python server.py'; }
+}
+
+$('go').onclick = async () => {
+  const o = $('out'); o.hidden = false; o.replaceChildren(el('p', null, 'Analyzing…'));
+  try {
+    const d = await (await fetch('/api/analyze', {method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({raw: $('raw').value})})).json();
+    if (d.error) throw new Error(d.error);
+    o.replaceChildren(el('div', 'verdict ' + (d.verdict === 'PHISHING' ? 'bad' : 'ok'), `${d.verdict} (score ${d.score}, threshold ${d.threshold})`), indicators(d.indicators));
+  } catch (e) { o.replaceChildren(el('p', 'bad', 'Error: ' + e.message)); }
+};
+$('fill').onclick = () => $('raw').value = PH;
+$('fill2').onclick = () => $('raw').value = LG;
+$('raw').value = PH;
+loadDemo();
+</script>
+</body>
+</html>
