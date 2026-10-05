@@ -1,0 +1,42 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables & secrets (NEVER commit secrets!)
+.env
+.env.*
+!.env.example
+
+# Virtual Environments
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Operating System temporary/cache files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE & Editor configurations
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# Distribution / Build artifacts
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# Logs & Debugging
+*.log

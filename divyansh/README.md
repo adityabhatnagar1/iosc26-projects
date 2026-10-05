@@ -15,7 +15,6 @@
 **Track:** Cybersecurity  
 **Candidate:** Divyansh Gupta  
 **Github Username**: divyanshg221220  
-**Phone Number**: 7065221206  
 **Email ID**: divyansh.5319051925@std.ggsipu.ac.in
 
 ---
