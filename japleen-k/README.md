@@ -39,6 +39,7 @@ This can achieve fast emergency response by alerting the contacts registered in 
 |---|---|---|
 | Python/Flask Server | 3.11 | Web-Server |
 | pycloudflared | 0.2.0 | Cloudflare Tunnel |
+| Unity | 6.3 | Android App |
 
 
 **Constraints:** 
