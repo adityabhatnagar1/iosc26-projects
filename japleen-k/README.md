@@ -64,7 +64,7 @@ A clock on the server keeps running that checks if the checkin time is greater t
 The Emergency button immediately sends a notification to the family and neighbors, that can be helpful to alert the emergency services.  
 
 
-![System Diagram](./docs/images/system-overview.png)
+![System Diagram](./media/final-build.png)
 
 ### Key Decisions
 What did you choose, why, and what did you reject?
@@ -90,10 +90,7 @@ Installable apk, with qr scanning, server connection and panic and emergency but
 
 ## 5. Demonstration
 
-Cover **every assigned demonstration requirement**.
-
-I need your requirement + need elegantly here, you could simply insert a youtube link for the recordings, No issues!
-
+[Youtube Video](https://youtu.be/0CU_XBualYM?si=kdl73IVlaKHy9UeI)
 ---
 
 ## 6. Final Result
@@ -108,7 +105,8 @@ I need your requirement + need elegantly here, you could simply insert a youtube
 - Different Timezones cause problems
 - No Sleep timer included
 
-**Demo:** [Video Link]
+**Demo:** 
+[Youtube Video](https://youtu.be/0CU_XBualYM?si=kdl73IVlaKHy9UeI)
 
 
 ---
