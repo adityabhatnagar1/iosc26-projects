@@ -1,0 +1,5 @@
+# Hardware Specification
+
+Not applicable.
+
+This is a pure software and cybersecurity repository. No microcontrollers, sensors, or circuit assemblies are required. Any machine that can run Python 3.10+ (dual-core CPU, 512 MB RAM, 50 MB disk) and reach the internet for breach lookups is sufficient.
