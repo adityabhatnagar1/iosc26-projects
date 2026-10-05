@@ -2,13 +2,12 @@
 
 # Project Title
 
-> One sentence: what you built + what it does.
 
-**Track:** [Track]  
+**Track:**   Hardware and Software Orchestration
 **Candidate:** Japleen K.  
-**Github Username**: [Username]  
-**Phone Number**: [Phone Number]  
-**Email ID**: [Email ID]  
+**Github Username**: japleenkCODES  
+**Phone Number**: 7428927898
+**Email ID**: japleenk21380@gmail.com
 
 ---
 
@@ -16,9 +15,13 @@
 
 ### What & Why
 What did you build, what does it do, and why did you choose it?
+I built a Panic/Emergency and Check In Button for the elderly, which can be very helpful in determining and taking care of your loved ones.
+In case of an emergency it can be used as a quick alarm that sends notifications to the contacts to help them. It also helps to keep check time to time check on them.
+
+I chose this project as it would be helpful for many families in the Indian modern household where parents are generally not living with their children in the cities, and it could be quickly used to get alerted on their health. 
 
 ### Expected Outcome
-What did you set out to achieve?
+This can achieve fast emergency response by alerting the contacts registered in the application, saving lives.
 
 ---
 
@@ -27,34 +30,60 @@ What did you set out to achieve?
 ### Hardware
 | Component | Qty | Purpose |
 |---|---:|---|
-| [Component] | [x] | [Purpose] |
+| ESP8266 | 1 | Used As the remote |
+| Push Buttons | 2 | Used in the remote |
+| Server | 1 | Used as a server for the backend and sending notifications |
 
 ### Software
 | Tool / Library | Version | Purpose |
 |---|---|---|
-| [Tool] | [v] | [Purpose] |
+| Python/Flask Server | 3.11 | Web-Server |
+| pycloudflared | 0.2.0 | Cloudflare Tunnel |
 
-**Constraints:** [Budget / hardware / time / power / etc.]
+
+**Constraints:** 
+
+1. Currently the server does not account for different time zones
+2. Check-in Alarms don't turn off while sleeping.
+
+These problems can be solved easily by converting times to standard IST or UTC 00:00.
+Check-in problem can be solved by adding sleep switch that adds a 8-10 hour to the check-in time.
 
 ---
 
 ## 3. Design
 
 ### System Overview
-Explain the system from input to output.
+A Flask Server runs continuously picking up requests made to it and classifying them into two types,
+    1. Check In
+    2. Emergency
+
+A clock on the server keeps running that checks if the checkin time is greater than a predefined check-in time threshold and if it exceeds it, it sends a notification to the family.
+
+The Emergency button immediately sends a notification to the family and neighbors, that can be helpful to alert the emergency services.  
+
 
 ![System Diagram](./docs/images/system-overview.png)
 
 ### Key Decisions
 What did you choose, why, and what did you reject?
 
+1. Choosing ESP ``` I chose esp8266 over arduino for wifi support and cost efficiency ```
+2. Choosing Flask over other servers like Django ``` Flask is lighter for the server than Django and allows over modularibility ```
+3. Unity App ``` The Remote can be replaced by a simple app for ease of use  ```
+
 ---
 
 ## 4. Implementation
 
-Explain the important hardware, firmware, software, algorithms, circuits, protocols, and calculations.
+![Server](./src/app.py)
+The Server uses threading to run two threads, One for the continuous clock and other for sending notifications.
 
-Link to relevant source files. Do not dump large code blocks here.
+![Unity App Source](./src/UnityProject)
+Unity Project for the android app.
+
+![APK](./src/UnityProject/panic_button.apk)
+Installable apk, with qr scanning, server connection and panic and emergency buttons.
 
 ---
 
@@ -69,34 +98,40 @@ I need your requirement + need elegantly here, you could simply insert a youtube
 ## 6. Final Result
 
 ### Working
-- [Feature]
-- [Feature]
-- [Feature]
+- Emergency Button
+- Check-in Button
+- Configurable Server and Server URL
+- QR Scanning
 
 ### Known Issues
-- [Issue]
-- [Limitation]
+- Different Timezones cause problems
+- No Sleep timer included
 
 **Demo:** [Video Link]
 
-![Final Build](./docs/images/final-build.jpg)
+![Final Build](./docs/images/final-build.png)
 
 ---
 
 ## 7. Limitations & Improvements
 
-**Limitations:** [Current limitations]
+**Limitations:** 
+- Different Timezones cause problems
+- No Sleep timer included
 
-**Next Steps:** [What you would improve with more time]
+**Next Steps:** 
+- Adding a sleep switch
+- Adding timezones
 
 ---
 
 ## 8. Key Learnings
 
-What did you actually learn from building and debugging this?
+Hardware implementation, Learning about web servers, python. This can be a very helpful project to many indian families
 
 ---
 
+<!-- Update
 ## 9. Repository Structure
 
 ```text
@@ -108,3 +143,4 @@ project-name/
 ├── tests/
 └── media/
 ```
+>
