@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wellness Check-In Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #121212; color: #e0e0e0; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: #1e1e1e; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        h1 { color: #4f46e5; text-align: center; }
+        .timer-card { background: #2d2d2d; padding: 15px; border-radius: 6px; text-align: center; margin-bottom: 20px; border: 1px solid #444; }
+        .timer-card h2 { margin: 0; font-size: 1.2em; color: #aaa; }
+        #timer-display { font-size: 2em; font-weight: bold; color: #34d399; margin-top: 5px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+        th { background-color: #2d2d2d; color: #ffffff; }
+        .badge-checkin { background: #065f46; color: #34d399; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .badge-emergency { background: #7f1d1d; color: #f87171; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .badge-alert { background: #78350f; color: #fbbf24; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .footer { text-align: center; margin-top: 15px; font-size: 0.9em; color: #888; }
+    </style>
+    <script>
+        const lastCheckInTime = new Date("{{ last_check_in_iso }}").getTime();
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const elapsedSeconds = Math.floor((now - lastCheckInTime) / 1000);
+
+            if (elapsedSeconds < 0) {
+                document.getElementById("timer-display").innerText = "00:00:00";
+                return;
+            }
+
+            const hours = Math.floor(elapsedSeconds / 3600);
+            const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+            const seconds = elapsedSeconds % 60;
+
+            const formattedTime = 
+                String(hours).padStart(2, '0') + ":" +
+                String(minutes).padStart(2, '0') + ":" +
+                String(seconds).padStart(2, '0');
+
+            document.getElementById("timer-display").innerText = formattedTime;
+        }
+
+        setInterval(updateTimer, 1000);
+        window.onload = updateTimer;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Elderly Wellness Dashboard</h1>
+        
+        <div class="timer-card">
+            <h2>Time Since Last Check-In</h2>
+            <div id="timer-display">Loading...</div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Timestamp (DDMMYY HHMMSS)</th>
+                    <th>Device ID</th>
+                    <th>Event Type</th>
+                    <th>Details / Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if logs %}
+                    {% for log in logs %}
+                    <tr>
+                        <td>{{ log.timestamp }}</td>
+                        <td>{{ log.device }}</td>
+                        <td>
+                            {% if log.type == 'checkin' %}
+                                <span class="badge-checkin">CHECK-IN</span>
+                            {% elif log.type == 'emergency' %}
+                                <span class="badge-emergency">EMERGENCY</span>
+                            {% else %}
+                                <span class="badge-alert">{{ log.type }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ log.status }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="4" style="text-align: center; color: #777;">No requests recorded yet.</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <p class="footer">Live server connection active.</p>
+    </div>
+</body>
+</html>
