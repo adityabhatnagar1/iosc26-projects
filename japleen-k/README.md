@@ -109,7 +109,6 @@ I need your requirement + need elegantly here, you could simply insert a youtube
 
 **Demo:** [Video Link]
 
-![Final Build](./docs/images/final-build.png)
 
 ---
 
